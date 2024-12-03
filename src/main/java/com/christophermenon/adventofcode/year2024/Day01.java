@@ -32,6 +32,24 @@ public class Day01 {
             total += Math.abs(left.get(i) - right.get(i));
         }
 
+        // Complete part 1
         System.out.printf("PART 1: %d\n", total);
+
+        // Put the numbers in two columns
+        left = new ArrayList<>();
+        right = new ArrayList<>();
+        for (String row : puzzle) {
+            left.add(Integer.parseInt(row.substring(0, 5)));
+            right.add(Integer.parseInt(row.substring(8, 13)));
+        }
+
+        // Sum the similarity
+        int similarity = 0;
+        for (Integer leftNum : left) {
+            similarity += leftNum * Collections.frequency(right, leftNum);
+        }
+
+        // Complete part 2
+        System.out.printf("PART 2: %d\n", similarity);
     }
 }
