@@ -1,9 +1,5 @@
 package com.christophermenon.adventofcode;
 
-/**
- *
- * @author cmenon12
- */
 public class HelloWorld {
 
     public static void main(String[] args) {

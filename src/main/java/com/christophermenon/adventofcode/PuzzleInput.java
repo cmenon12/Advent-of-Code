@@ -6,11 +6,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-/**
- *
- * @author cmenon12
- */
 public class PuzzleInput {
+
+    private PuzzleInput() {
+        throw new IllegalStateException("This is a utility class.");
+      }
 
     public static String[] getAsArray(int year, int day) {
         String path = String.format("src/main/java/com/christophermenon/adventofcode/year%d/input%02d.txt", year, day);
@@ -21,7 +21,7 @@ public class PuzzleInput {
                 result.add(scanner.nextLine());
             }
         } catch (FileNotFoundException e) {
-            System.out.printf("The file at %s was not found!\n", path);
+            System.out.printf("The file at %s was not found!%n", path);
         }
 
         return result.toArray(String[]::new);

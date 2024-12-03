@@ -5,10 +5,6 @@ import java.util.Collections;
 
 import com.christophermenon.adventofcode.PuzzleInput;
 
-/**
- *
- * @author cmenon12
- */
 public class Day01 {
 
     public static void main(String[] args) {
@@ -18,8 +14,8 @@ public class Day01 {
         ArrayList<Integer> left = new ArrayList<>();
         ArrayList<Integer> right = new ArrayList<>();
         for (String row : puzzle) {
-            left.add(Integer.parseInt(row.substring(0, 5)));
-            right.add(Integer.parseInt(row.substring(8, 13)));
+            left.add(Integer.valueOf(row.substring(0, 5)));
+            right.add(Integer.valueOf(row.substring(8, 13)));
         }
 
         // Sort in ascending order
@@ -33,14 +29,14 @@ public class Day01 {
         }
 
         // Complete part 1
-        System.out.printf("PART 1: %d\n", total);
+        System.out.printf("PART 1: %d%n", total);
 
         // Put the numbers in two columns
         left = new ArrayList<>();
         right = new ArrayList<>();
         for (String row : puzzle) {
-            left.add(Integer.parseInt(row.substring(0, 5)));
-            right.add(Integer.parseInt(row.substring(8, 13)));
+            left.add(Integer.valueOf(row.substring(0, 5)));
+            right.add(Integer.valueOf(row.substring(8, 13)));
         }
 
         // Sum the similarity
@@ -50,6 +46,6 @@ public class Day01 {
         }
 
         // Complete part 2
-        System.out.printf("PART 2: %d\n", similarity);
+        System.out.printf("PART 2: %d%n", similarity);
     }
 }
