@@ -1,5 +1,7 @@
 package com.christophermenon.adventofcode.year2024;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -12,6 +14,25 @@ public class Day03 {
 
         // Complete part 1
         System.out.printf("PART 1: %d%n", getTotal(puzzle));
+
+        // Split the puzzle on don't()
+        ArrayList<String> puzzleDont = new ArrayList<>();
+        puzzleDont.addAll(Arrays.asList(puzzle.split("don't\\(\\)")));
+        
+        // Save the total up to the first don't
+        int total = getTotal(puzzleDont.get(0));
+
+        // Add the totals after do() after each don't()
+        for (String item : puzzleDont.subList(1, puzzleDont.size()-1)) {
+            String[] splitItem = item.split("do\\(\\)", 2);
+            if (splitItem.length > 1) {
+                total += getTotal(splitItem[1]);
+            }
+            
+        }
+
+        // Complete part 2
+        System.out.printf("PART 2: %d%n", total);
 
     }
 
