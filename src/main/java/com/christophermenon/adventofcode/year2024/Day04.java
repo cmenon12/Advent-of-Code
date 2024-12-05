@@ -21,7 +21,8 @@ public class Day04 {
         puzzle.addAll(0, Collections.nCopies(3, ".".repeat(puzzle.get(0).length())));
         puzzle.addAll(Collections.nCopies(3, ".".repeat(puzzle.get(0).length())));
 
-        int total = 0;
+        int part1total = 0;
+        int part2total = 0;
         // Traverse through grid and get each X
         for (int y = 3; y < puzzle.size() - 3; y++) {
             String row = puzzle.get(y);
@@ -38,14 +39,31 @@ public class Day04 {
                         sevenRows.set(i, sevenRows.get(i).substring(x - 3, x + 4));
                     }
 
-                    // Count the XMAS in this grid 
-                    total += countXmas(sevenRows);
+                    // Count XMAS in this grid 
+                    part1total += countXmas(sevenRows);
+                }
+
+                if (row.charAt(x) == 'A') {
+
+                    // Extract a 3x3 grid around this A
+                    // Make a copy of the ArrayList
+                    ArrayList<String> threeRows = new ArrayList<>();
+                    for (int i = y-1; i < y+2; i++) {
+                        threeRows.add(puzzle.get(i));
+                    }
+                    for (int i = 0; i < threeRows.size(); i++) {
+                        threeRows.set(i, threeRows.get(i).substring(x - 1, x + 2));
+                    }
+
+                    // Check diagonal MAS in this grid 
+                    part2total += checkDiagonalMas(threeRows);
                 }
             }
         }
 
-        // Complete part 1
-        System.out.printf("PART 1: %d%n", total);
+        // Complete both parts
+        System.out.printf("PART 1: %d%n", part1total);
+        System.out.printf("PART 2: %d%n", part2total);
 
     }
 
@@ -99,5 +117,25 @@ public class Day04 {
         if ("XMAS".equals(text.toString())) total += 1;
 
         return total;
+    }
+
+    private static int checkDiagonalMas(ArrayList<String> threeRows) {
+        int total = 0;
+
+        // Find top-left to bottom-right MAS
+        StringBuilder text = new StringBuilder();
+        for (int i = 0; i < 3; i++) {
+            text.append(threeRows.get(i).charAt(i));
+        }
+        if ("MAS".equals(text.toString()) || "SAM".equals(text.toString())) total += 1;
+
+        // Find bottom-left to top-right SAM
+        text = new StringBuilder();
+        for (int i = 0; i < 3; i++) {
+            text.append(threeRows.get(2 - i).charAt(i));
+        }
+        if ("MAS".equals(text.toString()) || "SAM".equals(text.toString())) total += 1;
+
+        return total == 2 ? 1 : 0;
     }
 }
