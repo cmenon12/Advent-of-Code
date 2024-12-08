@@ -10,7 +10,6 @@ public class Day06 {
 
     public static void main(String[] args) {
         ArrayList<String> puzzle = new ArrayList<>(Arrays.asList(PuzzleInput.getAsArray(2024, 6)));
-        Direction direction = Direction.UP;
 
         // Add . at the start and end of each row
         for (int i = 0; i < puzzle.size(); i++) {
@@ -21,24 +20,61 @@ public class Day06 {
         puzzle.add(0, ".".repeat(puzzle.get(0).length()));
         puzzle.add(".".repeat(puzzle.get(0).length()));
 
+        System.out.printf("PART 1: %d%n", getTotalSquaresCovered(puzzle));
+
+        int totalLoop = 0;
+        for (int i = 1; i < puzzle.size()-1; i++) {
+            for (int j = 1; j < puzzle.get(0).length()-1; j++) {
+                if (puzzle.get(i).charAt(j) == '.') {
+                    puzzle.set(i, puzzle.get(i).substring(0, j) + "#" + puzzle.get(i).substring(j + 1));
+                    if (getTotalSquaresCovered(puzzle) == -1) {
+                        totalLoop++;
+                    }
+                    puzzle.set(i, puzzle.get(i).substring(0, j) + "." + puzzle.get(i).substring(j + 1));
+                }
+            }
+            System.out.println(i + " " + totalLoop);
+        }
+        System.out.printf("PART 2: %d%n", totalLoop);
+
+    }
+
+    /**
+     * Returns the total number of squares covered by the guard.
+     * @param existingPuzzle the puzzle.
+     * @return the total number of squares covered by the guard, or -1 if in a loop.
+     */
+    private static int getTotalSquaresCovered(ArrayList<String> existingPuzzle) {
+        // Make a deep copy of the puzzle
+        ArrayList<String> puzzle = new ArrayList<>();
+        for (String row : existingPuzzle) {
+            puzzle.add(row);
+        }
+        Direction direction = Direction.UP;
+
         // Move round the puzzle while not at the edge
+        int totalSteps = 100000;
         int[] coord = getCoordinates(puzzle);
-        while (coord[0] != 0 && coord[0] != puzzle.size() - 1 && coord[1] != 0 && coord[1] != puzzle.get(0).length() - 1) {
+        while (coord[0] != 0 && coord[0] != puzzle.size() - 1 && coord[1] != 0 && coord[1] != puzzle.get(0).length() - 1 && totalSteps > 0) {
             if (checkIfCanMove(puzzle, direction)) {
                 puzzle = move(puzzle, direction);
             } else {
                 direction = changeDirection(direction);
             }
             coord = getCoordinates(puzzle);
+            totalSteps--;
         }
+
+        // Indicate if in a loop
+        if (totalSteps == 0) return -1;
 
         // Count the number of Xs in the puzzle
         int total = 0;
         for (String row : puzzle) {
             total += row.chars().filter(ch -> ch == 'X').count();
         }
-        System.out.printf("PART 1: %d%n", total);
-
+        return total;
+        
     }
 
     private static int[] getCoordinates(ArrayList<String> puzzle) {
