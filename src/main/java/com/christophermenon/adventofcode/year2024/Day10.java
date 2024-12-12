@@ -11,7 +11,8 @@ public class Day10 {
         ArrayList<String> puzzle = new ArrayList<>(Arrays.asList(PuzzleInput.getAsArray(2024, 10)));
 
         // Iterate through 0 on the map
-        int total = 0;
+        int part1Total = 0;
+        int part2Total = 0;
         for (int i = 0; i < puzzle.size(); i++) {
             int j = puzzle.get(i).indexOf('0');
             while (j != -1) {
@@ -19,8 +20,9 @@ public class Day10 {
 
                 // Get the 9s reachable from the 0
                 ArrayList<int[]> trailEnds = followTrailhead(puzzle, currentPosition);
+                part2Total += trailEnds.size();
 
-                // Remove duplicate 9s
+                // Remove duplicate 9s for part 1
                 ArrayList<int[]> validTrailEnds = new ArrayList<>();
                 for (int[] newItem : trailEnds) {
                     boolean alreadyExists = false;
@@ -34,12 +36,13 @@ public class Day10 {
                 }
 
                 // Save them and iterate
-                total += validTrailEnds.size();
+                part1Total += validTrailEnds.size();
                 j = puzzle.get(i).indexOf('0', j + 1);
             }
         }
 
-        System.out.printf("PART 1: %d%n", total);
+        System.out.printf("PART 1: %d%n", part1Total);
+        System.out.printf("PART 2: %d%n", part2Total);
     }
 
     private static ArrayList<int[]> followTrailhead(ArrayList<String> puzzle, int[] currentPosition) {
@@ -84,5 +87,3 @@ public class Day10 {
         return locations;     
     }
 }
-
-// 798
