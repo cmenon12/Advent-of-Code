@@ -17,18 +17,18 @@ public class Day19 {
         ArrayList<String> patterns = new ArrayList<>(puzzle.subList(2, puzzle.size()));
 
         // Create a solution object and solve it
-        Solution solution = new Solution(towels);
+        Solution19 solution = new Solution19(towels);
         solution.solveAll(patterns);
     }
 }
 
-class Solution {
+class Solution19 {
 
     ArrayList<String> towels;
     HashMap<String, Long> preSolvedPatterns;
 
     // Create the variables we want across the solution methods
-    Solution(ArrayList<String> towels) {
+    Solution19(ArrayList<String> towels) {
         this.towels = towels;
         this.preSolvedPatterns = new HashMap<>();
     }
